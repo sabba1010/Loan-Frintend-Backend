@@ -263,13 +263,13 @@ npm run lint --fix
 
 ### Test Health Check
 ```bash
-curl http://localhost:5000/api/health
+curl https://loan-backend-flame.vercel.app/api/health
 # Response: {"status":"Server is running"}
 ```
 
 ### Test Email Sending
 ```bash
-curl -X POST http://localhost:5000/api/contact \
+curl -X POST https://loan-backend-flame.vercel.app/api/contact \
   -H "Content-Type: application/json" \
   -d '{"name":"Test","email":"test@example.com","subject":"Test","message":"Test"}'
 ```
@@ -291,7 +291,7 @@ submitContactForm() [contactService.ts]
     ↓
 POST /api/contact
     ↓
-Express Backend (http://localhost:5000)
+Express Backend (https://loan-backend-flame.vercel.app)
     ↓
 Validation & Preparation
     ↓
@@ -366,7 +366,7 @@ README_DOCS.md ............... Documentation Index (START HERE)
 ### Immediately
 - ✅ Start the servers: `npm run dev:all`
 - ✅ Access frontend: http://localhost:5173
-- ✅ Access backend health: http://localhost:5000/api/health
+- ✅ Access backend health: https://loan-backend-flame.vercel.app/api/health
 - ✅ Use pre-built ContactForm component
 
 ### After 5 Minutes

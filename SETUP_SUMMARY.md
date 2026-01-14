@@ -50,7 +50,7 @@ npm run dev:all
 
 This starts:
 - Frontend at http://localhost:5173
-- Backend at http://localhost:5000
+- Backend at https://loan-backend-flame.vercel.app
 
 ### 3. Test It
 Use the `ContactForm` component in your page:
@@ -106,7 +106,7 @@ NODE_ENV=development
 
 ### Optional Frontend Configuration (.env)
 ```env
-VITE_API_BASE_URL=http://localhost:5000
+VITE_API_BASE_URL=https://loan-backend-flame.vercel.app
 ```
 
 ---
@@ -115,13 +115,13 @@ VITE_API_BASE_URL=http://localhost:5000
 
 ### Health Check
 ```
-GET http://localhost:5000/api/health
+GET https://loan-backend-flame.vercel.app/api/health
 Response: { "status": "Server is running" }
 ```
 
 ### Send Contact Form
 ```
-POST http://localhost:5000/api/contact
+POST https://loan-backend-flame.vercel.app/api/contact
 Content-Type: application/json
 
 {
@@ -201,7 +201,7 @@ Update the backend to handle your specific fields (loan amount, employment, etc.
 
 ### Test Email Sending
 ```bash
-curl -X POST http://localhost:5000/api/contact \
+curl -X POST https://loan-backend-flame.vercel.app/api/contact \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Test User",
@@ -240,7 +240,7 @@ Check `sabbahossain123@gmail.com` for the received email.
 ### Problem: "CORS error"
 **Solution:**
 - Backend must be running on port 3000
-- Frontend .env must have: `VITE_API_BASE_URL=http://localhost:5000`
+- Frontend .env must have: `VITE_API_BASE_URL=https://loan-backend-flame.vercel.app`
 
 See `EMAIL_SETUP.md` for detailed troubleshooting.
 

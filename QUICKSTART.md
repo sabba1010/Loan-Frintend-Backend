@@ -22,7 +22,7 @@ npm run dev:all
 
 This starts:
 - Frontend: http://localhost:5173
-- Backend: http://localhost:5000
+- Backend: https://loan-backend-flame.vercel.app
 
 ## Testing the Email Service
 
@@ -39,7 +39,7 @@ export function MyPage() {
 ### Method 2: Send a Test Request
 Using curl:
 ```bash
-curl -X POST http://localhost:5000/api/contact \
+curl -X POST https://loan-backend-flame.vercel.app/api/contact \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Test User",
@@ -51,7 +51,7 @@ curl -X POST http://localhost:5000/api/contact \
 
 Using JavaScript/Fetch:
 ```javascript
-fetch('http://localhost:5000/api/contact', {
+fetch('https://loan-backend-flame.vercel.app/api/contact', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
@@ -69,7 +69,7 @@ fetch('http://localhost:5000/api/contact', {
 
 1. **Check Backend Health:**
    ```
-   http://localhost:5000/api/health
+   https://loan-backend-flame.vercel.app/api/health
    ```
    Should see: `{"status":"Server is running"}`
 

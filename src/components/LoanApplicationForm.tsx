@@ -224,12 +224,12 @@ export function LoanApplicationForm() {
       console.log(`\n✅ Payload has ${Object.keys(payload).length} fields`);
 
       console.log("\n🌐 SENDING REQUEST TO BACKEND:");
-      console.log("URL: http://localhost:5000/api/contact");
+      console.log("URL: https://loan-backend-flame.vercel.app/api/contact");
       console.log("Method: POST");
       console.log("Content-Type: application/json");
 
       // Send as JSON (application/json)
-      const response = await fetch("http://localhost:5000/api/contact", {
+      const response = await fetch("https://loan-backend-flame.vercel.app/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

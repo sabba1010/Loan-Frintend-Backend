@@ -89,7 +89,7 @@ Frontend:
 
 Backend:
    ├─ Port: 3000
-   └─ URL: http://localhost:5000
+   └─ URL: https://loan-backend-flame.vercel.app
 
 Email:
    ├─ From: envogame@gmail.com
@@ -176,10 +176,10 @@ For Technical Details:
 npm run dev:all
 
 # Test health check
-curl http://localhost:5000/api/health
+curl https://loan-backend-flame.vercel.app/api/health
 
 # Test email sending
-curl -X POST http://localhost:5000/api/contact \
+curl -X POST https://loan-backend-flame.vercel.app/api/contact \
   -H "Content-Type: application/json" \
   -d '{"name":"Test","email":"test@example.com","subject":"Test","message":"Test"}'
 

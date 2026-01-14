@@ -97,7 +97,7 @@ EMAIL_TO=sabbahossain123@gmail.com
 
 ### Step 2: Test via API
 ```bash
-curl -X POST http://localhost:5000/api/test-email
+curl -X POST https://loan-backend-flame.vercel.app/api/test-email
 ```
 
 ### Step 3: Verify Response

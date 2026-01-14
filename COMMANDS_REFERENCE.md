@@ -116,7 +116,7 @@ lsof -ti:5173 | xargs kill -9
 Open browser console (F12) and run:
 
 ```javascript
-fetch('http://localhost:5000/api/contact', {
+fetch('https://loan-backend-flame.vercel.app/api/contact', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
@@ -135,12 +135,12 @@ fetch('http://localhost:5000/api/contact', {
 
 ```bash
 # Windows (Command Prompt)
-curl -X POST http://localhost:5000/api/contact ^
+curl -X POST https://loan-backend-flame.vercel.app/api/contact ^
   -H "Content-Type: application/json" ^
   -d "{\"name\":\"Test\",\"email\":\"test@example.com\",\"subject\":\"Test\",\"message\":\"Test\"}"
 
 # macOS/Linux
-curl -X POST http://localhost:5000/api/contact \
+curl -X POST https://loan-backend-flame.vercel.app/api/contact \
   -H "Content-Type: application/json" \
   -d '{"name":"Test","email":"test@example.com","subject":"Test","message":"Test"}'
 ```
@@ -149,7 +149,7 @@ curl -X POST http://localhost:5000/api/contact \
 
 1. Open Postman
 2. Create new POST request
-3. URL: `http://localhost:5000/api/contact`
+3. URL: `https://loan-backend-flame.vercel.app/api/contact`
 4. Headers: `Content-Type: application/json`
 5. Body (JSON):
 ```json
@@ -166,10 +166,10 @@ curl -X POST http://localhost:5000/api/contact \
 
 ```bash
 # Windows
-curl http://localhost:5000/api/health
+curl https://loan-backend-flame.vercel.app/api/health
 
 # macOS/Linux
-curl http://localhost:5000/api/health
+curl https://loan-backend-flame.vercel.app/api/health
 ```
 
 Expected response:
@@ -424,10 +424,10 @@ Email transporter is ready to send emails
 http://localhost:5173
 
 # Backend Health
-http://localhost:5000/api/health
+https://loan-backend-flame.vercel.app/api/health
 
 # Backend API
-POST http://localhost:5000/api/contact
+POST https://loan-backend-flame.vercel.app/api/contact
 ```
 
 ---
@@ -463,7 +463,7 @@ cp .env.backup .env      # macOS/Linux
 npm run dev:all
 
 # 2. In another terminal, test email
-curl -X POST http://localhost:5000/api/contact \
+curl -X POST https://loan-backend-flame.vercel.app/api/contact \
   -H "Content-Type: application/json" \
   -d '{"name":"Test","email":"test@example.com","subject":"Test","message":"Test"}'
 
@@ -543,7 +543,7 @@ ls -la .env       # macOS/Linux
 
 ```
 Frontend: http://localhost:5173
-Backend Health: http://localhost:5000/api/health
+Backend Health: https://loan-backend-flame.vercel.app/api/health
 Gmail Settings: https://myaccount.google.com/security
 Gmail App Passwords: https://myaccount.google.com/apppasswords
 npm Docs: https://docs.npmjs.com/

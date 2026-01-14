@@ -222,7 +222,7 @@ INFRASTRUCTURE
 FRONTEND
 ├── VITE_API_BASE_URL
 │   └── Points to backend API
-│       http://localhost:5000
+│       https://loan-backend-flame.vercel.app
 
 BACKEND
 ├── EMAIL_USER → Gmail address
@@ -299,7 +299,7 @@ Frontend JavaScript:
   - Calls submitContactForm()
   │
   ▼
-Sends HTTP POST to http://localhost:5000/api/contact
+Sends HTTP POST to https://loan-backend-flame.vercel.app/api/contact
   {
     "name": "Jane Smith",
     "email": "jane@company.com",

@@ -196,7 +196,7 @@ project-root/
 User Form → Frontend → Backend → Gmail → Recipient
 
 ### API Endpoint
-`POST http://localhost:5000/api/contact`
+`POST https://loan-backend-flame.vercel.app/api/contact`
 
 ### Required Fields
 - name

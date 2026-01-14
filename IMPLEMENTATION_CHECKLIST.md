@@ -58,7 +58,7 @@
 - [ ] Check console shows:
   - [ ] "Server is running on port 3000"
   - [ ] "Email transporter is ready to send emails"
-- [ ] Visit http://localhost:5000/api/health in browser
+- [ ] Visit https://loan-backend-flame.vercel.app/api/health in browser
 - [ ] Should see: `{"status":"Server is running"}`
 
 ### Test 2: Email Transporter
@@ -69,7 +69,7 @@
 ### Test 3: Test Email Submission
 Option A - Using Browser Console:
 ```javascript
-fetch('http://localhost:5000/api/contact', {
+fetch('https://loan-backend-flame.vercel.app/api/contact', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
@@ -85,7 +85,7 @@ fetch('http://localhost:5000/api/contact', {
 
 Option B - Using curl:
 ```bash
-curl -X POST http://localhost:5000/api/contact \
+curl -X POST https://loan-backend-flame.vercel.app/api/contact \
   -H "Content-Type: application/json" \
   -d '{"name":"Test","email":"test@example.com","subject":"Test","message":"Test"}'
 ```
@@ -207,7 +207,7 @@ curl -X POST http://localhost:5000/api/contact \
 - [ ] Verify app password is correct (16 characters)
 
 ### CORS Errors
-- [ ] Backend is running on http://localhost:5000
+- [ ] Backend is running on https://loan-backend-flame.vercel.app
 - [ ] Frontend .env has VITE_API_BASE_URL
 - [ ] No typos in URLs
 - [ ] CORS middleware is enabled in server.js

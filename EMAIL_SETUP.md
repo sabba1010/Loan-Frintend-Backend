@@ -66,7 +66,7 @@ npm run dev:backend
 npm run dev:all
 ```
 
-The server will start on `http://localhost:5000`
+The server will start on `https://loan-backend-flame.vercel.app`
 
 ## API Endpoints
 
@@ -140,7 +140,7 @@ const handleSubmit = async (data) => {
 Create a `.env.local` file (or update `.env`) with:
 
 ```env
-VITE_API_BASE_URL=http://localhost:5000
+VITE_API_BASE_URL=https://loan-backend-flame.vercel.app
 ```
 
 This tells the frontend where to reach the backend API.

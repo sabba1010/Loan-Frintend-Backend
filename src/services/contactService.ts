@@ -3,7 +3,7 @@
  * Handles sending contact form data to the backend email service
  */
 
-const API_BASE_URL = process.env.VITE_API_BASE_URL || 'http://localhost:5000';
+const API_BASE_URL = process.env.VITE_API_BASE_URL || 'https://loan-backend-flame.vercel.app';
 
 export interface ContactFormData {
   name: string;

@@ -169,7 +169,7 @@ Applicant Information:
 ### Frontend (.env or .env.local)
 
 ```env
-VITE_API_BASE_URL=http://localhost:5000
+VITE_API_BASE_URL=https://loan-backend-flame.vercel.app
 ```
 
 ### Backend (.env)
@@ -217,7 +217,7 @@ The backend validates:
 ### Manual Test
 
 ```bash
-curl -X POST http://localhost:5000/api/contact \
+curl -X POST https://loan-backend-flame.vercel.app/api/contact \
   -H "Content-Type: application/json" \
   -d '{
     "name": "John Doe",
@@ -328,7 +328,7 @@ Install: `npm install express-rate-limit`
 
 ### "CORS errors"
 - Backend must be running on port 3000
-- Frontend .env must have `VITE_API_BASE_URL=http://localhost:5000`
+- Frontend .env must have `VITE_API_BASE_URL=https://loan-backend-flame.vercel.app`
 - Check for typos in environment variables
 
 ---
