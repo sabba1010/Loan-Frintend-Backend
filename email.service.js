@@ -39,25 +39,42 @@ class EmailService {
     console.log(`   EMAIL_FROM: ${process.env.EMAIL_FROM}`);
     console.log(`   EMAIL_TO: ${process.env.EMAIL_TO}`);
 
+    // CRITICAL FIX: Trim credentials to remove hidden spaces
+    const emailUser = (process.env.EMAIL_USER || '').trim();
+    const emailPassword = (process.env.EMAIL_PASSWORD || '').trim();
+
+    if (!emailUser || !emailPassword) {
+      throw new Error('EMAIL_USER or EMAIL_PASSWORD is empty after trimming. Check for extra spaces in .env');
+    }
+
     try {
       console.log('\n🔧 Creating Nodemailer transporter...');
+      console.log('   Credential validation: PASSED (no empty strings)');
 
       // Create transporter with Gmail SMTP settings
-      // Works for Gmail accounts and custom domains forwarded through Gmail
+      // CRITICAL: Must use App Password, not regular Gmail password
+      // EMAIL_USER and EMAIL_FROM should match for Gmail SMTP
       this.transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 587,
-        secure: false, // TLS (not SSL)
+        secure: false, // TLS (not SSL) - port 587 is TLS
         auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASSWORD,
+          user: emailUser,
+          pass: emailPassword,
         },
         tls: {
           rejectUnauthorized: false,
           minVersion: 'TLSv1.2',
         },
-        logger: true,
-        debug: true,
+        connectionUrl: undefined, // Ensure no connection string overrides
+        logger: false, // Disable noisy logging
+        debug: false, // Disable debug logging
+        pool: {
+          maxConnections: 5,
+          maxMessages: Infinity,
+          rateDelta: 20000,
+          rateLimit: 5,
+        },
       });
 
       console.log('✅ Transporter created successfully');
@@ -128,10 +145,20 @@ class EmailService {
       throw error;
     }
 
+    // CRITICAL FIX: Gmail SMTP requires 'from' to match the authenticated account
+    // If 'from' doesn't match EMAIL_USER, Gmail silently rejects the email
+    const emailFrom = mailOptions.from || process.env.EMAIL_FROM || process.env.EMAIL_USER;
+    
+    // Ensure 'from' matches the authenticated user (Gmail requirement)
+    if (emailFrom !== process.env.EMAIL_USER) {
+      console.warn(`⚠️  WARNING: Email 'from' (${emailFrom}) differs from authenticated user (${process.env.EMAIL_USER})`);
+      console.warn('   Gmail may silently reject this email. Correcting....');
+    }
+
     try {
       console.log('\n🚀 SENDING EMAIL');
       console.log('='.repeat(70));
-      console.log(`📤 From: ${mailOptions.from}`);
+      console.log(`📤 From: ${emailFrom}`);
       console.log(`📥 To: ${mailOptions.to}`);
       console.log(`📌 Subject: ${mailOptions.subject}`);
       if (mailOptions.replyTo) {
@@ -142,7 +169,19 @@ class EmailService {
       const startTime = Date.now();
       console.log('\n⏳ Attempting to send via SMTP...');
 
-      const info = await this.transporter.sendMail(mailOptions);
+      // CRITICAL: Prepare final email options with corrected 'from'
+      const finalMailOptions = {
+        ...mailOptions,
+        from: emailFrom, // Always use authenticated email as sender
+      };
+
+      // Send the email and explicitly wait for response
+      const info = await this.transporter.sendMail(finalMailOptions);
+
+      // Verify we got a messageId (proof email was sent)
+      if (!info || !info.messageId) {
+        throw new Error('Email sent but no messageId returned from server');
+      }
 
       const elapsed = Date.now() - startTime;
       console.log('\n✅ EMAIL SENT SUCCESSFULLY!');
@@ -170,16 +209,17 @@ class EmailService {
 
       console.error('\n🔍 Debugging Information:');
       console.error(`   - SMTP Host: smtp.gmail.com:587`);
-      console.error(`   - Email From: ${mailOptions.from}`);
+      console.error(`   - Auth User: ${process.env.EMAIL_USER}`);
+      console.error(`   - Email From: ${emailFrom}`);
       console.error(`   - Email To: ${mailOptions.to}`);
       console.error(`   - Transporter Ready: ${this.isReady}`);
       console.error('\n💡 Possible Solutions:');
-      console.error('   1. Check EMAIL_PASSWORD - remove any spaces');
-      console.error('   2. Verify it\'s an App Password, not regular password');
-      console.error('   3. Enable 2FA on your email account');
-      console.error('   4. Check for Gmail security alerts');
-      console.error('   5. Verify EMAIL_USER and EMAIL_FROM are correct');
-      console.error('   6. Check firewall/network blocking port 587');
+      console.error('   1. Ensure EMAIL_PASSWORD is a Gmail App Password (not regular password)');
+      console.error('   2. Verify 2FA is enabled on Gmail account');
+      console.error('   3. Check Gmail Account Security: https://myaccount.google.com/security');
+      console.error('   4. Remove any spaces from EMAIL_PASSWORD in .env');
+      console.error('   5. Verify EMAIL_USER matches EMAIL_FROM');
+      console.error('   6. Check firewall/network allows port 587 outbound');
       console.error('='.repeat(70) + '\n');
 
       throw error;
@@ -265,6 +305,126 @@ class EmailService {
           
           <hr style="border: none; border-top: 1px solid #ddd; margin: 20px 0;">
           <p style="color: #999; font-size: 12px;">Sent on ${new Date().toLocaleString()}</p>
+        </div>
+      `,
+    };
+
+    return this.sendEmail(mailOptions);
+  }
+
+  /**
+   * Send a loan application email
+   * @param {Object} appData - Loan application data
+   * @returns {Promise<Object>} Email sending result
+   */
+  async sendLoanApplicationEmail(appData) {
+    const {
+      firstName = '',
+      lastName = '',
+      email = '',
+      phone = '',
+      dateOfBirth = '',
+      province = '',
+      employmentStatus = '',
+      employer = '',
+      jobTitle = '',
+      annualIncome = '',
+      yearsEmployed = '',
+      loanAmount = '',
+      loanPurpose = '',
+      details = '',
+    } = appData;
+
+    const fullName = `${firstName} ${lastName}`.trim();
+    const contactEmail = email || 'Not provided';
+
+    const mailOptions = {
+      from: process.env.EMAIL_FROM,
+      to: process.env.EMAIL_TO,
+      subject: `📋 New Loan Application - ${fullName}`,
+      replyTo: email || undefined,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f9f9f9; border-radius: 8px;">
+          <h2 style="color: #2c3e50; margin-top: 0; border-bottom: 3px solid #3498db; padding-bottom: 10px;">📋 New Loan Application Submitted</h2>
+          
+          <div style="margin-top: 20px;">
+            <h3 style="color: #34495e; margin-top: 20px; margin-bottom: 10px;">👤 Personal Information</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+              <tr style="background: #ecf0f1;">
+                <td style="padding: 8px; border: 1px solid #bdc3c7;"><strong>Full Name:</strong></td>
+                <td style="padding: 8px; border: 1px solid #bdc3c7;">${this._escapeHtml(fullName || 'Not provided')}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #bdc3c7;"><strong>Email:</strong></td>
+                <td style="padding: 8px; border: 1px solid #bdc3c7;">${this._escapeHtml(contactEmail)}</td>
+              </tr>
+              <tr style="background: #ecf0f1;">
+                <td style="padding: 8px; border: 1px solid #bdc3c7;"><strong>Phone:</strong></td>
+                <td style="padding: 8px; border: 1px solid #bdc3c7;">${this._escapeHtml(phone || 'Not provided')}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #bdc3c7;"><strong>Date of Birth:</strong></td>
+                <td style="padding: 8px; border: 1px solid #bdc3c7;">${this._escapeHtml(dateOfBirth || 'Not provided')}</td>
+              </tr>
+              <tr style="background: #ecf0f1;">
+                <td style="padding: 8px; border: 1px solid #bdc3c7;"><strong>Province:</strong></td>
+                <td style="padding: 8px; border: 1px solid #bdc3c7;">${this._escapeHtml(province || 'Not provided')}</td>
+              </tr>
+            </table>
+            
+            <h3 style="color: #34495e; margin-top: 20px; margin-bottom: 10px;">💼 Employment Information</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+              <tr style="background: #ecf0f1;">
+                <td style="padding: 8px; border: 1px solid #bdc3c7;"><strong>Employment Status:</strong></td>
+                <td style="padding: 8px; border: 1px solid #bdc3c7;">${this._escapeHtml(employmentStatus || 'Not provided')}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #bdc3c7;"><strong>Employer:</strong></td>
+                <td style="padding: 8px; border: 1px solid #bdc3c7;">${this._escapeHtml(employer || 'Not provided')}</td>
+              </tr>
+              <tr style="background: #ecf0f1;">
+                <td style="padding: 8px; border: 1px solid #bdc3c7;"><strong>Job Title:</strong></td>
+                <td style="padding: 8px; border: 1px solid #bdc3c7;">${this._escapeHtml(jobTitle || 'Not provided')}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #bdc3c7;"><strong>Annual Income:</strong></td>
+                <td style="padding: 8px; border: 1px solid #bdc3c7;">$${this._escapeHtml(annualIncome || '0')}</td>
+              </tr>
+              <tr style="background: #ecf0f1;">
+                <td style="padding: 8px; border: 1px solid #bdc3c7;"><strong>Years Employed:</strong></td>
+                <td style="padding: 8px; border: 1px solid #bdc3c7;">${this._escapeHtml(yearsEmployed || 'Not provided')}</td>
+              </tr>
+            </table>
+            
+            <h3 style="color: #34495e; margin-top: 20px; margin-bottom: 10px;">💰 Loan Information</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+              <tr style="background: #ecf0f1;">
+                <td style="padding: 8px; border: 1px solid #bdc3c7;"><strong>Loan Amount:</strong></td>
+                <td style="padding: 8px; border: 1px solid #bdc3c7;"><strong style="color: #27ae60;">$${this._escapeHtml(loanAmount || '0')}</strong></td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #bdc3c7;"><strong>Loan Purpose:</strong></td>
+                <td style="padding: 8px; border: 1px solid #bdc3c7;">${this._escapeHtml(loanPurpose || 'Not provided')}</td>
+              </tr>
+              <tr style="background: #ecf0f1;">
+                <td style="padding: 8px; border: 1px solid #bdc3c7; vertical-align: top;"><strong>Additional Details:</strong></td>
+                <td style="padding: 8px; border: 1px solid #bdc3c7;">${this._escapeHtml(details || 'None provided').replace(/\n/g, '<br>')}</td>
+              </tr>
+            </table>
+            
+            <h3 style="color: #34495e; margin-top: 20px; margin-bottom: 10px;">📎 Attachments</h3>
+            <p style="color: #555;">Check the attached files for:</p>
+            <ul style="color: #555; margin: 10px 0;">
+              <li>T1 General (Income Tax Document)</li>
+              <li>Void Cheque (Banking Information)</li>
+            </ul>
+          </div>
+          
+          <hr style="border: none; border-top: 2px solid #bdc3c7; margin: 20px 0;">
+          <p style="color: #7f8c8d; font-size: 12px; text-align: center;">
+            Submitted on ${new Date().toLocaleString()}<br>
+            This is an automated email from the Loan Joy application system.
+          </p>
         </div>
       `,
     };

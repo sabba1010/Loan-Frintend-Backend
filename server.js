@@ -17,8 +17,8 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -61,59 +61,91 @@ app.post('/api/test-email', async (req, res) => {
   }
 });
 
-// Contact form submission endpoint
+// Loan application submission endpoint
 app.post('/api/contact', async (req, res) => {
   console.log('\n' + '='.repeat(70));
-  console.log('[POST] /api/contact - New contact form submission');
+  console.log('[POST] /api/contact - New loan application submission');
   console.log('='.repeat(70));
   
   try {
-    const { name, email, subject, message } = req.body;
+    console.log('\n📥 REQUEST RECEIVED');
+    console.log('Content-Type:', req.get('content-type'));
+    console.log('Request Headers:', req.headers);
 
-    // Validate required fields
-    if (!name || !email || !subject || !message) {
-      console.warn('⚠️  Validation failed: Missing required fields');
-      return res.status(400).json({
-        success: false,
-        message: 'All fields (name, email, subject, message) are required',
-      });
-    }
+    console.log('\n📋 RAW REQUEST BODY:');
+    console.log(JSON.stringify(req.body, null, 2));
 
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      console.warn(`⚠️  Validation failed: Invalid email format: ${email}`);
-      return res.status(400).json({
-        success: false,
-        message: 'Invalid email format',
-      });
-    }
+    console.log('\n🔍 PARSING REQUEST BODY:');
+    // Extract all loan application fields from request body
+    const applicationData = {
+      // Personal Info
+      firstName: req.body.firstName || '',
+      lastName: req.body.lastName || '',
+      email: req.body.email || '',
+      phone: req.body.phone || '',
+      dateOfBirth: req.body.dateOfBirth || '',
+      province: req.body.province || '',
+      // Employment Info
+      employmentStatus: req.body.employmentStatus || '',
+      employer: req.body.employer || '',
+      jobTitle: req.body.jobTitle || '',
+      annualIncome: req.body.annualIncome || '',
+      yearsEmployed: req.body.yearsEmployed || '',
+      // Loan Info
+      loanAmount: req.body.loanAmount || '',
+      loanPurpose: req.body.loanPurpose || '',
+      details: req.body.details || '',
+      // Files (if present)
+      t1File: req.body.t1File || null,
+      voidChequeFile: req.body.voidChequeFile || null,
+    };
 
-    console.log(`   Name: ${name}`);
-    console.log(`   Email: ${email}`);
-    console.log(`   Subject: ${subject}`);
-    console.log(`   Message length: ${message.length} characters`);
-    console.log('✅ All validations passed');
+    // Log received data
+    console.log('📋 Application Data Extracted:');
+    console.log(`   Name: ${applicationData.firstName} ${applicationData.lastName}`);
+    console.log(`   Email: ${applicationData.email}`);
+    console.log(`   Phone: ${applicationData.phone}`);
+    console.log(`   Date of Birth: ${applicationData.dateOfBirth}`);
+    console.log(`   Province: ${applicationData.province}`);
+    console.log(`   Employment Status: ${applicationData.employmentStatus}`);
+    console.log(`   Employer: ${applicationData.employer}`);
+    console.log(`   Job Title: ${applicationData.jobTitle}`);
+    console.log(`   Annual Income: $${applicationData.annualIncome}`);
+    console.log(`   Years Employed: ${applicationData.yearsEmployed}`);
+    console.log(`   Loan Amount: $${applicationData.loanAmount}`);
+    console.log(`   Loan Purpose: ${applicationData.loanPurpose}`);
+    console.log(`   Details: ${applicationData.details}`);
+    console.log(`   T1 File: ${applicationData.t1File ? `Present (${applicationData.t1File.name}, ${applicationData.t1File.size} bytes)` : 'Not provided'}`);
+    console.log(`   Void Cheque: ${applicationData.voidChequeFile ? `Present (${applicationData.voidChequeFile.name}, ${applicationData.voidChequeFile.size} bytes)` : 'Not provided'}`);
+
+    console.log('\n✅ Data extraction successful');
+    console.log('📧 Preparing to send email...');
 
     // Send email via service
-    await emailService.sendContactFormEmail({ name, email, subject, message });
+    await emailService.sendLoanApplicationEmail(applicationData);
 
-    console.log('='.repeat(70) + '\n');
+    console.log('\n✅ EMAIL SENT SUCCESSFULLY');
+    console.log('='.repeat(70));
 
     return res.status(200).json({
       success: true,
-      message: 'Email sent successfully',
+      message: 'Application submitted and email sent successfully',
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
-    console.error('\n❌ Failed to send contact email:');
-    console.error(`   Error: ${error.message}`);
-    console.error(`   Code: ${error.code}`);
+    console.error('\n❌ FAILED TO PROCESS LOAN APPLICATION');
+    console.error('='.repeat(70));
+    console.error(`Error Message: ${error.message}`);
+    console.error(`Error Code: ${error.code}`);
+    console.error(`Error Name: ${error.name}`);
+    if (error.stack) {
+      console.error(`Stack Trace:\n${error.stack}`);
+    }
     console.error('='.repeat(70) + '\n');
     
     return res.status(500).json({
       success: false,
-      message: 'Failed to send email',
+      message: 'Failed to submit application',
       error: process.env.NODE_ENV === 'development' ? error.message : 'Email service error',
       errorCode: error.code,
     });
