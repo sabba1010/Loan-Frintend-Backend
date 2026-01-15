@@ -45,7 +45,7 @@ export function UploadsStep({
           className="mt-0.5"
         />
         <Label htmlFor="consent" className="text-sm leading-relaxed cursor-pointer">
-          I consent to MapleBridge Financial Inc. obtaining my credit report from a Canadian 
+          I consent to One quick loan Ltd Financial Inc. obtaining my credit report from a Canadian 
           credit bureau (e.g., Equifax or TransUnion) and verifying my income for the purposes 
           of processing this application.
         </Label>

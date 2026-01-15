@@ -8,7 +8,7 @@ const steps = ["Personal", "Employment", "Loan", "Uploads"];
 
 export function StepsNav({ currentStep }: StepsNavProps) {
   return (
-    <div className="flex items-center justify-between mb-8">
+    <div className="flex items-center justify-between mb-6">
       {steps.map((label, i) => {
         const stepNum = i + 1;
         const isActive = currentStep === stepNum;

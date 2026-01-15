@@ -335,7 +335,7 @@ export function LoanApplicationForm() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <ProgressBar progress={progress} />
       <StepsNav currentStep={currentStep} />
 

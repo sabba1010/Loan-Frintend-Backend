@@ -4,7 +4,7 @@ interface ProgressBarProps {
 
 export function ProgressBar({ progress }: ProgressBarProps) {
   return (
-    <div className="mb-6">
+    <div className="mb-4">
       <div className="flex justify-between text-sm mb-2">
         <span className="font-medium text-foreground">Application progress</span>
         <span className="text-primary font-semibold">{progress}%</span>

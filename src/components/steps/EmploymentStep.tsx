@@ -28,9 +28,9 @@ export function EmploymentStep({ data, onChange }: EmploymentStepProps) {
   };
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div className="space-y-2">
+    <div className="space-y-4 animate-fade-in">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-1">
           <Label htmlFor="employmentStatus">Employment status</Label>
           <Select
             value={data.employmentStatus}

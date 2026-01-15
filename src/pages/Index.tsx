@@ -12,13 +12,13 @@ const Index = () => {
       <Header />
       
       <div className="bg-hero">
-        <div className="max-w-6xl mx-auto px-6 py-12 lg:py-16">
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
+        <div className="max-w-7xl mx-auto px-4 py-12 lg:py-16">
+          <div className="grid lg:grid-cols-2 gap-8 items-start">
             {/* Hero content */}
             <HeroSection />
             
             {/* Application form */}
-            <div className="bg-card rounded-2xl shadow-xl p-6 lg:p-8">
+            <div className="bg-card rounded-2xl shadow-xl p-4 lg:p-6">
               <LoanApplicationForm />
             </div>
           </div>

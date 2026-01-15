@@ -22,19 +22,18 @@ interface PersonalInfoStepProps {
 }
 
 const provinces = [
-  "Alberta",
-  "British Columbia",
-  "Manitoba",
-  "New Brunswick",
-  "Newfoundland and Labrador",
-  "Nova Scotia",
-  "Ontario",
-  "Prince Edward Island",
-  "Quebec",
-  "Saskatchewan",
-  "Northwest Territories",
-  "Nunavut",
-  "Yukon",
+  "AB",
+  "BC",
+  "MB",
+  "NB",
+  "NL",
+  "NT",
+  "NU",
+  "ON",
+  "PE",
+  "QC",
+  "SK",
+  "YT",
 ];
 
 // Validation functions
@@ -99,9 +98,9 @@ export function PersonalInfoStep({ data, onChange }: PersonalInfoStepProps) {
   };
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div className="space-y-2">
+    <div className="space-y-4 animate-fade-in">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-1">
           <Label htmlFor="firstName">First Name</Label>
           <Input
             id="firstName"

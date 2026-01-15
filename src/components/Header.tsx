@@ -13,8 +13,8 @@ export function Header() {
             <Leaf className="w-5 h-5 text-primary-foreground" />
           </div>
           <div>
-            <span className="text-xl font-bold font-display text-foreground">MapleBridge</span>
-            <span className="text-xl font-normal font-display text-muted-foreground ml-1">Loans</span>
+            <span className="text-xl font-bold font-display text-foreground">One quick loan Ltd</span>
+            {/* <span className="text-xl font-normal font-display text-muted-foreground ml-1">loan Ltd</span> */}
           </div>
         </div>
         <nav className="hidden md:flex items-center gap-6">
