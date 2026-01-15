@@ -99,7 +99,7 @@ export function PersonalInfoStep({ data, onChange }: PersonalInfoStepProps) {
 
   return (
     <div className="space-y-4 animate-fade-in">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-4">
         <div className="space-y-1">
           <Label htmlFor="firstName">First Name</Label>
           <Input
