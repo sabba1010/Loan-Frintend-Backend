@@ -104,7 +104,6 @@ export function PersonalInfoStep({ data, onChange }: PersonalInfoStepProps) {
           <Label htmlFor="firstName">First Name</Label>
           <Input
             id="firstName"
-            placeholder="John"
             value={data.firstName}
             onChange={(e) => handleChange("firstName", e.target.value)}
           />
@@ -114,7 +113,6 @@ export function PersonalInfoStep({ data, onChange }: PersonalInfoStepProps) {
           <Label htmlFor="lastName">Last Name</Label>
           <Input
             id="lastName"
-            placeholder="Doe"
             value={data.lastName}
             onChange={(e) => handleChange("lastName", e.target.value)}
           />
@@ -125,7 +123,6 @@ export function PersonalInfoStep({ data, onChange }: PersonalInfoStepProps) {
           <Input
             id="email"
             type="email"
-            placeholder="john.doe@example.com"
             value={data.email}
             onChange={(e) => handleChange("email", e.target.value)}
             onBlur={(e) => validateField("email", e.target.value)}
