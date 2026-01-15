@@ -12,20 +12,22 @@ const Index = () => {
       <Header />
       
       <div className="bg-white">
-        <div className="max-w-7xl mx-auto px-4 py-12 lg:py-16">
-          <div className="grid lg:grid-cols-2 gap-8 items-center">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-4 lg:py-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-center">
             {/* Hero content */}
             <HeroSection />
             
             {/* Application form */}
-            <div className="bg-card rounded-2xl border border-border p-4 lg:p-6">
+            <div className="bg-card rounded-2xl border border-border p-3 sm:p-4 lg:p-6">
               <LoanApplicationForm />
             </div>
           </div>
         </div>
       </div>
+  
+<HowItWorks />
+
       
-      <HowItWorks />
       <RequiredDocs />
       <FAQSection />
       <Footer />

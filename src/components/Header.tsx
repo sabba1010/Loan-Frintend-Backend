@@ -6,15 +6,15 @@ export function Header() {
   };
 
   return (
-    <header className="w-full py-4 px-4 bg-card border-b border-border sticky top-0 z-50">
+    <header className="w-full py-3 sm:py-4 px-3 sm:px-4 bg-card border-b border-border sticky top-0 z-50">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
-            <Leaf className="w-5 h-5 text-primary-foreground" />
+        <div className="flex items-center gap-1 sm:gap-2 min-w-0">
+          <div className="w-8 sm:w-10 h-8 sm:h-10 rounded-xl bg-primary flex items-center justify-center flex-shrink-0">
+            <Leaf className="w-4 sm:w-5 h-4 sm:h-5 text-primary-foreground" />
           </div>
-          <div>
-            <span className="text-xl font-bold font-display text-foreground">One quick loan Ltd</span><hr className="visibility-hidden"/>
-            <span className="text-[18px] font-normal font-display text-muted-foreground ml-1">Fast, secure, and Canadian compliant</span> 
+          <div className="min-w-0">
+            <span className="text-base sm:text-lg lg:text-xl font-bold font-display text-foreground block">One quick loan Ltd</span>
+            <span className="text-xs sm:text-sm lg:text-base font-normal font-display text-muted-foreground">Fast, secure, Canadian</span> 
           </div>
         </div>
         <nav className="hidden md:flex items-center gap-6">
