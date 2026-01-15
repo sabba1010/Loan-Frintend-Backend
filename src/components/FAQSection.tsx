@@ -36,16 +36,16 @@ function FAQItem({ question, answer }: FAQItemProps) {
 export function FAQSection() {
   const faqs = [
     {
-      question: "Who is eligible?",
-      answer: "Canadian residents 18+ with valid T1 General and a Canadian bank account. We assess applications based on income and creditworthiness.",
-    },
-    {
-      question: "How long does approval take?",
-      answer: "We review most applications within 1 business day. Once approved, funds are typically deposited within 24 hours.",
+      question: "Do you run a hard credit check?",
+      answer: "We only run a hard inquiry after you explicitly consent on the Uploads step.",
     },
     {
       question: "Is my data secure?",
-      answer: "Yes. We use bank-level TLS encryption and never share your information with third parties without your consent.",
+      answer: "Files are transmitted over TLS. Replace the submission logic with secure uploads to your storage provider and server‑side encryption at rest.",
+    },
+    {
+      question: "Who is eligible?",
+      answer: "Canadian residents who have a steady income and a Canadian chequing account.",
     },
   ];
 
