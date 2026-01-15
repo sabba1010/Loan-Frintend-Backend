@@ -8,17 +8,17 @@ import { Footer } from "@/components/Footer";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-white">
       <Header />
       
-      <div className="bg-hero">
+      <div className="bg-white">
         <div className="max-w-7xl mx-auto px-4 py-12 lg:py-16">
-          <div className="grid lg:grid-cols-2 gap-8 items-start">
+          <div className="grid lg:grid-cols-2 gap-8 items-center">
             {/* Hero content */}
             <HeroSection />
             
             {/* Application form */}
-            <div className="bg-card rounded-2xl shadow-xl p-4 lg:p-6">
+            <div className="bg-card rounded-2xl border border-border p-4 lg:p-6">
               <LoanApplicationForm />
             </div>
           </div>

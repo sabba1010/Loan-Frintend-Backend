@@ -6,8 +6,8 @@ export function Header() {
   };
 
   return (
-    <header className="w-full py-4 px-6 bg-card border-b border-border sticky top-0 z-50">
-      <div className="max-w-6xl mx-auto flex items-center justify-between">
+    <header className="w-full py-4 px-4 bg-card border-b border-border sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
             <Leaf className="w-5 h-5 text-primary-foreground" />
