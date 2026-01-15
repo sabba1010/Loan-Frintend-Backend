@@ -340,7 +340,7 @@ export function LoanApplicationForm() {
       <StepsNav currentStep={currentStep} />
 
       {error && (
-        <div className="bg-destructive/10 border border-destructive/30 text-destructive rounded-xl p-4 text-sm">
+        <div className="bg-destructive/10 border border-destructive/30 text-destructive rounded-xl p-3 sm:p-4 text-sm mb-4 animate-pulse" style={{ marginTop: "40px" }}>
           {error}
         </div>
       )}
