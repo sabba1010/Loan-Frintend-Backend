@@ -151,6 +151,15 @@
 
   .form-card {
     @apply bg-card rounded-2xl p-8 shadow-[var(--shadow-card)] transition-shadow duration-300;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  @media (min-width: 640px) {
+    .form-card {
+      padding-left: inherit;
+      padding-right: inherit;
+    }
   }
 
   .form-card:hover {
