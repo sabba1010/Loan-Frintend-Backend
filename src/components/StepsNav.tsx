@@ -19,27 +19,26 @@ export function StepsNav({ currentStep }: StepsNavProps) {
             <div className="flex items-center w-full">
               {i > 0 && (
                 <div 
-                  className={`flex-1 h-0.5 transition-colors duration-300 ${
-                    currentStep > i ? "bg-primary" : "bg-border"
-                  }`}
+                  className={`flex-1 h-0.5 transition-colors duration-300`}
+                  style={{ backgroundColor: currentStep > i ? "#00A63E" : "var(--border)" }}
                 />
               )}
               <div
                 className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300 ${
                   isDone
-                    ? "bg-primary text-primary-foreground"
+                    ? "text-white"
                     : isActive
-                    ? "bg-primary text-primary-foreground ring-4 ring-primary/20"
+                    ? "text-primary-foreground ring-4"
                     : "bg-muted text-muted-foreground"
                 }`}
+                style={isDone ? { backgroundColor: "#00A63E" } : isActive ? { backgroundColor: "#0066CC", boxShadow: "0 0 0 4px rgba(0, 102, 204, 0.2)" } : undefined}
               >
                 {isDone ? <Check className="w-4 h-4" /> : stepNum}
               </div>
               {i < steps.length - 1 && (
                 <div 
-                  className={`flex-1 h-0.5 transition-colors duration-300 ${
-                    currentStep > stepNum ? "bg-primary" : "bg-border"
-                  }`}
+                  className={`flex-1 h-0.5 transition-colors duration-300`}
+                  style={{ backgroundColor: currentStep > stepNum ? "#00A63E" : "var(--border)" }}
                 />
               )}
             </div>
