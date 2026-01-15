@@ -14,7 +14,7 @@ export function Header() {
           </div>
           <div>
             <span className="text-xl font-bold font-display text-foreground">One quick loan Ltd</span><hr className="visibility-hidden"/>
-            <span className="text-xl font-normal font-display text-muted-foreground ml-1">Fast, secure, and Canadian compliant</span> 
+            <span className="text-[18px] font-normal font-display text-muted-foreground ml-1">Fast, secure, and Canadian compliant</span> 
           </div>
         </div>
         <nav className="hidden md:flex items-center gap-6">
