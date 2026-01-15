@@ -67,24 +67,71 @@ export function LoanApplicationForm() {
   const validateStep = (step: number): string | null => {
     switch (step) {
       case 1:
-        // Optional: Only validate email format if provided
-        if (personalInfo.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(personalInfo.email)) {
-          return "Enter a valid email format.";
+        // Personal Info validation - ALL REQUIRED FIELDS
+        if (!personalInfo.firstName || personalInfo.firstName.trim() === "") {
+          return "First name is required.";
         }
-        if (personalInfo.phone && !/^[0-9\-\+\(\)\s]{7,}$/.test(personalInfo.phone)) {
-          return "Enter a valid phone number.";
+        if (!personalInfo.lastName || personalInfo.lastName.trim() === "") {
+          return "Last name is required.";
+        }
+        if (!personalInfo.email || personalInfo.email.trim() === "") {
+          return "Email is required.";
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(personalInfo.email)) {
+          return "Please enter a valid email address.";
+        }
+        if (!personalInfo.phone || personalInfo.phone.trim() === "") {
+          return "Phone number is required.";
+        }
+        if (!/\d/.test(personalInfo.phone.replace(/\D/g, "")) || personalInfo.phone.replace(/\D/g, "").length < 7) {
+          return "Please enter a valid phone number (at least 7 digits).";
+        }
+        if (!personalInfo.dateOfBirth || personalInfo.dateOfBirth.trim() === "") {
+          return "Date of birth is required.";
+        }
+        if (personalInfo.sin && personalInfo.sin.trim() !== "") {
+          if (!/^\d{9}$/.test(personalInfo.sin)) {
+            return "SIN must be exactly 9 digits.";
+          }
+        }
+        if (!personalInfo.streetAddress || personalInfo.streetAddress.trim() === "") {
+          return "Street address is required.";
+        }
+        if (!personalInfo.city || personalInfo.city.trim() === "") {
+          return "City is required.";
+        }
+        if (!personalInfo.province || personalInfo.province.trim() === "") {
+          return "Province is required.";
+        }
+        if (!personalInfo.postalCode || personalInfo.postalCode.trim() === "") {
+          return "Postal code is required.";
         }
         return null;
       case 2:
-        // Optional: Only validate annual income if provided
-        if (employmentInfo.annualIncome && Number(employmentInfo.annualIncome) <= 0) {
-          return "Annual income must be greater than 0.";
+        // Employment Info validation - ALL REQUIRED FIELDS
+        if (!employmentInfo.employmentStatus || employmentInfo.employmentStatus.trim() === "") {
+          return "Employment status is required.";
+        }
+        if (!employmentInfo.monthlyIncome || employmentInfo.monthlyIncome.trim() === "") {
+          return "Monthly income is required.";
+        }
+        if (Number(employmentInfo.monthlyIncome) <= 0) {
+          return "Monthly income must be greater than 0.";
+        }
+        if (!employmentInfo.employer || employmentInfo.employer.trim() === "") {
+          return "Employer / Business name is required.";
         }
         return null;
       case 3:
-        // Optional: Only validate loan amount if provided
-        if (loanInfo.loanAmount && Number(loanInfo.loanAmount) < 500) {
+        // Loan Info validation - ALL REQUIRED FIELDS
+        if (!loanInfo.loanAmount || loanInfo.loanAmount.trim() === "") {
+          return "Loan amount is required.";
+        }
+        if (Number(loanInfo.loanAmount) < 500) {
           return "Minimum loan amount is $500.";
+        }
+        if (!loanInfo.loanPurpose || loanInfo.loanPurpose.trim() === "") {
+          return "Purpose of loan is required.";
         }
         return null;
       case 4:

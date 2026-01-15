@@ -30,11 +30,6 @@ export function LoanStep({ data, onChange }: LoanStepProps) {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <div>
-        <h2 className="text-2xl font-bold font-display text-foreground">Loan Details</h2>
-        <p className="text-muted-foreground mt-1">Tell us about your loan requirements</p>
-      </div>
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div className="space-y-2">
           <Label htmlFor="loanAmount">Requested amount (CAD)</Label>

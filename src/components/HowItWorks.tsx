@@ -22,12 +22,12 @@ export function HowItWorks() {
         </h2>
         <div className="grid md:grid-cols-3 gap-8">
           {steps.map((step, i) => (
-            <div key={step.title} className="bg-card rounded-2xl p-6 shadow-card">
-              <div className="text-xs font-semibold text-primary mb-2">Step {i + 1}</div>
-              <h3 className="text-lg font-semibold font-display text-foreground mb-2">
+            <div key={step.title} className="bg-card rounded-2xl p-6 shadow-card flex flex-col justify-between">
+              <div className="text-sm font-semibold text-primary mb-3">Step {i + 1}</div>
+              <h3 className="text-xl font-semibold font-display text-foreground mb-3">
                 {step.title}
               </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <p className="text-base text-muted-foreground leading-relaxed">
                 {step.description}
               </p>
             </div>

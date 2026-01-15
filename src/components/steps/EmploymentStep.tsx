@@ -4,10 +4,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 interface EmploymentData {
   employmentStatus: string;
+  monthlyIncome: string;
   employer: string;
-  jobTitle: string;
-  annualIncome: string;
-  yearsEmployed: string;
 }
 
 interface EmploymentStepProps {
@@ -16,8 +14,7 @@ interface EmploymentStepProps {
 }
 
 const employmentStatuses = [
-  "Full-time Employee",
-  "Part-time Employee",
+  "Employed",
   "Self-employed",
   "Contract Worker",
   "Retired",
@@ -32,14 +29,9 @@ export function EmploymentStep({ data, onChange }: EmploymentStepProps) {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <div>
-        <h2 className="text-2xl font-bold font-display text-foreground">Employment Details</h2>
-        <p className="text-muted-foreground mt-1">Help us understand your income and employment</p>
-      </div>
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div className="space-y-2">
-          <Label htmlFor="employmentStatus">Employment Status</Label>
+          <Label htmlFor="employmentStatus">Employment status</Label>
           <Select
             value={data.employmentStatus}
             onValueChange={(value) => handleChange("employmentStatus", value)}
@@ -58,44 +50,23 @@ export function EmploymentStep({ data, onChange }: EmploymentStepProps) {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="employer">Employer Name</Label>
+          <Label htmlFor="monthlyIncome">Monthly income (before tax)</Label>
           <Input
-            id="employer"
-            placeholder="Company Inc."
-            value={data.employer}
-            onChange={(e) => handleChange("employer", e.target.value)}
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="jobTitle">Job Title</Label>
-          <Input
-            id="jobTitle"
-            placeholder="Software Developer"
-            value={data.jobTitle}
-            onChange={(e) => handleChange("jobTitle", e.target.value)}
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="annualIncome">Annual Income (CAD)</Label>
-          <Input
-            id="annualIncome"
+            id="monthlyIncome"
             type="number"
-            placeholder="75,000"
-            value={data.annualIncome}
-            onChange={(e) => handleChange("annualIncome", e.target.value)}
+            placeholder="e.g., 4500"
+            value={data.monthlyIncome}
+            onChange={(e) => handleChange("monthlyIncome", e.target.value)}
           />
         </div>
 
         <div className="space-y-2 md:col-span-2">
-          <Label htmlFor="yearsEmployed">Years at Current Employer</Label>
+          <Label htmlFor="employer">Employer / Business name</Label>
           <Input
-            id="yearsEmployed"
-            type="number"
-            placeholder="3"
-            value={data.yearsEmployed}
-            onChange={(e) => handleChange("yearsEmployed", e.target.value)}
+            id="employer"
+            placeholder=""
+            value={data.employer}
+            onChange={(e) => handleChange("employer", e.target.value)}
           />
         </div>
       </div>

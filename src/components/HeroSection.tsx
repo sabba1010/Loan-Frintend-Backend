@@ -2,7 +2,7 @@ import { Shield, FileCheck, Lock } from "lucide-react";
 
 export function HeroSection() {
   return (
-    <div className="text-primary-foreground py-4 lg:py-8">
+    <div className="text-primary-foreground py-4 lg:py-8 ">
       <div className="max-w-xl space-y-6">
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-display leading-tight">
           Apply for a personal loan in minutes

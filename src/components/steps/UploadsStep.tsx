@@ -21,13 +21,6 @@ export function UploadsStep({
 }: UploadsStepProps) {
   return (
     <div className="space-y-6 animate-fade-in">
-      <div>
-        <h2 className="text-2xl font-bold font-display text-foreground">Upload Documents</h2>
-        <p className="text-muted-foreground mt-1">
-          Upload your tax return and banking information
-        </p>
-      </div>
-
       <FileUpload
         label="T1 General (PDF)"
         description="Upload your most recent T1 General. Accepted type: PDF. Max 10MB."
